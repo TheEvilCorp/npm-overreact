@@ -1,0 +1,22 @@
+{
+  "name": "over-react",
+  "version": "0.2.1",
+  "description": "cli to download projects created by using overreact.herokuapp.com",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheEvilCorp/npm-overreact.git"
+  },
+  "author": "EvilCorp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheEvilCorp/npm-overreact/issues"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "overreact": "index.js"
+  },
+  "homepage": "https://github.com/TheEvilCorp/npm-overreact#readme"
+}
