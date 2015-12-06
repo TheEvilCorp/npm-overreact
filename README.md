@@ -7,4 +7,4 @@ To get started:
 
 Then head over to <a href="https://overreact.herokuapp.com/">OverReact</a> and wireframe your UI. Once done, head over to your terminal and copy and paste the text provided
 
-```overreact <project-name>```
+```overreact <hash provided>```
