@@ -1,6 +1,6 @@
 {
   "name": "over-react",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "description": "cli to download projects created by using overreact.herokuapp.com",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
