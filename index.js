@@ -18,7 +18,7 @@ function unzipIt(project, counter){
         mv ./${project}/*/* ${project} &&
         rm -rf ./${project}/${project} &&
         rm -rf ${process.argv.slice(2)[0]}.zip &&
-        echo cd into ${project}${counter <= 0 ? '.' : ', your project name was taken in the cwd, thus the appended number.'} If you requested a starter kit,  run "npm install" then "npm start", then visit your site at localhost:3000. Enjoy!;`, function(err, stdout) {
+        echo cd into ${project}${counter <= 0 ? '.' : ', your project name was taken in the cwd, thus the appended number.'} If you requested a starter kit,  run "npm install" then "npm run start-dev", then visit your site at localhost:3000. Enjoy!;`, function(err, stdout) {
         console.log(stdout);
       })
       // console.log(process.cwd());

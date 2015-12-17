@@ -1,6 +1,6 @@
 {
   "name": "over-react",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "cli to download projects created by using overreact.io",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
