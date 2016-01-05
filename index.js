@@ -1,32 +1,73 @@
 #! /usr/bin/env node
 var exec = require('child_process').exec;
 var fs = require('fs');
+var os = require('os');
+var http = require('http');
+var fs = require('fs');
+var unzip = require('unzip');
 // console.log(process.argv.slice(2)[0]);https://overreact.herokuapp.com
 var projectName = process.argv.slice(2)[0].split('-')[0];
 var append = 0;
+var operatingSystem = os.platform();
+var cwd = process.cwd();
+var hash = process.argv.slice(2)[0];
 
-function unzipIt(project, counter){
-  fs.stat(`./${project}`, function(err, stats) {
+
+function unzipIt(project, counter) {
+  var options = {
+    host: 'www.overreact.io',
+    path: '/zips/' + hash + '.zip',
+  };
+
+  fs.stat('./' + project, function(err, stats) {
     if(!stats) {
-      return exec(
-        //initiates a curl request to OverReact server for the requested zip file
-        //then unzips the file
-        //the unzipped file is nested, so move all of the grandchildren into the root folder and delete the nested folder
-        //delete the zip and echo
-        `curl -O https://overreact.herokuapp.com/zips/${process.argv.slice(2)[0]}.zip &&
-        unzip -qq -d ./${project} ${process.argv.slice(2)[0]}.zip &&
-        mv ./${project}/*/* ${project} &&
-        rm -rf ./${project}/${project} &&
-        rm -rf ${process.argv.slice(2)[0]}.zip &&
-        echo cd into ${project}${counter <= 0 ? '.' : ', your project name was taken in the cwd, thus the appended number.'} If you requested a starter kit,  run "npm install" then "npm run start-dev", then visit your site at localhost:3000. Enjoy!;`, function(err, stdout) {
-        console.log(stdout);
-      })
-      // console.log(process.cwd());
+      var req = http.request(options, function(res) {
+        var writeStream = fs.createWriteStream('./' + projectName + '.zip');
+        res.on('data', function (chunk) {
+          writeStream.write(chunk);
+        });
+        res.on('end', function() {
+          writeStream.end();
+          fs.createReadStream('./'+projectName+'.zip').pipe(unzip.Extract({ path: './'}));
+          fs.unlinkSync('./' + projectName + '.zip');
+          rename(project);
+        })
+      }).end();
+    }
+
+  });
+}
+
+function rename(source) {
+  fs.stat(source, function(err, stats) {
+    if(!stats) {
+      return rename(source);
     } else {
-      counter++;
-      project = projectName + counter;
-      unzipIt(project, counter);
+      var dirName = cwd + '/' + projectName;
+      fs.stat(dirName, function(err, stats) {
+        if(stats) {
+          return console.log('cd into ' + hash +', your project name is already taken in this directory. Run NPM install and enjoy!!!');
+        }
+        return setTimeout(function(){
+          fs.rename(source,  dirName, function(err) {
+          if(err) {
+            console.log(err);
+          } else {
+            console.log('cd into ' + projectName + ' and run NPM install and enjoy!!!');
+          }
+          });
+        }, 3000);
+      });
     }
   });
 }
-unzipIt(projectName, append);
+
+// function exists(dir, counter) {
+//   fs.stat(dir, function(err, stats) {
+//     if(stats) return exists(dir + counter, counter);
+//     fs.mkdirSync(cwd + '/' + dir)
+//   })
+//   return dir.split('').slice(2).join('');
+// }
+
+unzipIt(hash, append);
