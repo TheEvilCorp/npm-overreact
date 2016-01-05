@@ -1,6 +1,6 @@
 {
   "name": "over-react",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "cli to download projects created by using overreact.io",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/TheEvilCorp/npm-overreact#readme",
   "dependencies": {
-    "node-zip": "^1.1.1",
     "unzip": "^0.1.11"
   }
 }
